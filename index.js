@@ -30,7 +30,7 @@ router.get('/', function(req, res) {
     (ts != null && ts.length != 0 && ts.length == 8) &&
     (rlc != null && rlc.length != 0 && rlc.length == 32)) {
 
-        var bufferKey = Buffer.from(('ABCD1234QWER5678' + uid + uid), 'hex');
+        var bufferKey = Buffer.from(('FFFF' + uid + uid), 'hex');
 
         console.log("Key: " + bufferKey.length);
 
