@@ -32,7 +32,7 @@ router.get('/', function(req, res) {
 
         var bufferKey = Buffer.from(('ABCD1234QWER5678'), 'hex');
 
-        console.log("Key: " + bufferKey);
+        console.log("Key: " + bufferKey.length);
 
         var bufferMessage = Buffer.from((ts + uid + (Buffer.from(tf).toString('hex'))), 'hex');
         var options = {returnAsBuffer: true};
