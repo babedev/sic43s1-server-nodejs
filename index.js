@@ -10,7 +10,7 @@ const router = express.Router();
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'pug');
 
-router.get('/', function(req, res) {
+router.get('/', function (req, res) {
     var uid = req.query.U != null ? req.query.U : "N/A";
     var tf = req.query.TF != null ? req.query.TF : "N/A";
     var ts = req.query.TS != null ? req.query.TS : "N/A";
@@ -26,22 +26,19 @@ router.get('/', function(req, res) {
     console.log(req.query);
 
     if ((uid != null && uid.length != 0 && uid.length == 14) &&
-    (tf != null && tf.length != 0 && tf.length == 2) &&
-    (ts != null && ts.length != 0 && ts.length == 8) &&
-    (rlc != null && rlc.length != 0 && rlc.length == 32)) {
+        (tf != null && tf.length != 0 && tf.length == 2) &&
+        (ts != null && ts.length != 0 && ts.length == 8) &&
+        (rlc != null && rlc.length != 0 && rlc.length == 32)) {
 
         var bufferKey = Buffer.from(('41424344313233345157455235363738'), 'hex');
-
-        console.log("Key: " + bufferKey.length);
-
         var bufferMessage = Buffer.from((ts + uid + (Buffer.from(tf).toString('hex'))), 'hex');
-        var options = {returnAsBuffer: true};
+        var options = { returnAsBuffer: true };
         cmac = nodeAesCmac(bufferKey, bufferMessage, options).toString('hex');
 
         if (cmac.toUpperCase() === rlc) {
             rlcStatus = "Correct";
 
-            if ( tf === '00' ) {
+            if (tf === '00') {
                 tfStatus = 'SEALED';
             } else {
                 tfStatus = 'OPENED';
@@ -49,7 +46,7 @@ router.get('/', function(req, res) {
         } else {
             rlcStatus = "Incorrect";
         }
-        
+
         res.render("index", {
             Uid: uid,
             Key: bufferKey.toString('hex').toUpperCase(),
